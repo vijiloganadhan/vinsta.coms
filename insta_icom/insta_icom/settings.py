@@ -25,7 +25,7 @@ SECRET_KEY =os.environ.get("SECRET_KEY","your secert key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG")
 from decouple import config
-ALLOWED_HOSTS = config("ALLOWED_HOST","").split(",")
+ALLOWED_HOSTS=config("ALLOWED_HOSTS",default="").split(",")
 
 
 
