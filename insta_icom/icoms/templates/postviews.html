@@ -1,0 +1,132 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: #000;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .post-card {
+        background-color: white;
+        border: 1px solid #333;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+        margin: 20px 0;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .post-card:hover {
+        transform: scale(1.02);
+    }
+
+    .post-card h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        text-align: center;
+        color: black;
+    }
+
+    .post-card img,
+    .post-card video {
+        width: 100%;
+        max-height: 500px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        object-fit: cover;
+    }
+
+    .delete-btn {
+        display: inline-block;
+        background-color: #ff3b3b;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        background-color: #e50000;
+    }
+
+    /* ===== MEDIA QUERIES ===== */
+
+    /* Mobile (small devices) */
+    @media (max-width: 600px) {
+        body {
+            padding: 10px;
+        }
+        .post-card {
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+        }
+        .post-card h1 {
+            font-size: 18px;
+        }
+        .post-card img,
+        .post-card video {
+            max-height: 350px;
+        }
+        .delete-btn {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+    }
+
+    /* Tablets */
+    @media (min-width: 601px) and (max-width: 1024px) {
+        .post-card {
+            width: 85%;
+            max-width: 650px;
+        }
+        .post-card h1 {
+            font-size: 22px;
+        }
+        .post-card img,
+        .post-card video {
+            max-height: 450px;
+        }
+    }
+
+    /* Laptops & Desktops */
+    @media (min-width: 1025px) {
+        body {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .post-card {
+            width: 45%;
+            max-width: 600px;
+            margin: 15px;
+        }
+    }
+</style>
+
+{% for i in userpost %}
+<div class="post-card">
+    <h1>{{ i.title }}</h1>
+    
+    {% if i.image %}
+    <img src="{{ i.image.url }}" alt="Post Image">
+    {% endif %}
+    
+    {% if i.video %}
+    <video src="{{ i.video.url }}" controls autoplay muted></video>
+    {% endif %}
+    
+    <a href="{% url 'deletepost' i.id %}" class="delete-btn">Delete Post</a>
+</div>
+{% endfor %}
+{% endblock content %}

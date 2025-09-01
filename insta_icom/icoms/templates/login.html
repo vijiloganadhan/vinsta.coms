@@ -1,0 +1,85 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background:black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        background-color: white;
+        border: 1px solid #dbdbdb;
+        padding: 40px 30px;
+        width: 350px;
+        text-align: center;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container h1 {
+        font-family: 'Grand Hotel', cursive;
+        font-size: 40px;
+        color: #262626;
+        margin-bottom: 30px;
+    }
+
+    .login-container label {
+        display: none;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+        background: #fafafa;
+    }
+
+    .login-container input[type="submit"] {
+        background-color: #0095f6;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        width: 100%;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .login-container input[type="submit"]:hover {
+        background-color: #007ed6;
+    }
+
+    .signup-link {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .signup-link a {
+        color: #0095f6;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+
+<div class="login-container">
+    <h1>vinsta</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="user" placeholder="Username"><br>
+        <input type="password" name="p1" placeholder="Password"><br>
+        <input type="submit" value="Log In">
+    </form>
+    <div class="signup-link">
+        Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+    </div>
+</div>
+{% endblock content %}

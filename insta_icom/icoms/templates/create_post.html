@@ -1,0 +1,85 @@
+{% extends 'main.html'%}
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="">title</label>
+    <input type="text" name="title">
+    <label for="">desc</label>
+    <textarea name="desc" id=""></textarea>
+    <label for="">choice</label>
+    <select name="choice" id="">
+        <option value="image">image</option>
+        <option value="video">video</option>
+    </select>
+    <input type="file" name="images" id="">
+    <input type="file" name="videos">
+    <input type="submit" value="create">
+</form>
+<style>
+   form {
+  background: linear-gradient(to bottom right, #fdfbfb, #ebedee);
+  max-width: 400px;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+form label {
+  font-weight: 600;
+  color: #262626;
+  font-size: 0.95rem;
+}
+
+form input[type="text"],
+form textarea,
+form select,
+form input[type="file"] {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus,
+form input[type="file"]:focus {
+  border-color: #d63092; /* Instagram pink */
+  outline: none;
+}
+
+form input[type="submit"] {
+  background: linear-gradient(to right, #feda75, #d63092, #962fbf);
+  color: white;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+/* Responsive for smaller screens */
+@media screen and (max-width: 480px) {
+  form {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+}
+
+</style>
+{% endblock content %}

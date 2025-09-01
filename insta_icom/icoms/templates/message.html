@@ -1,0 +1,217 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+/* ===== INSTAGRAM CHAT THEME ===== */
+body {
+    background-color: #000;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+h2 {
+    background-color: #121212;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    margin: 0;
+    font-weight: 500;
+    border-bottom: 1px solid #262626;
+}
+
+#chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Message bubbles */
+.message {
+    padding: 10px 14px;
+    border-radius: 20px;
+    max-width: 75%;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    display: inline-block;
+    position: relative;
+}
+
+.from-user {
+    background: linear-gradient(45deg, #d62976, #fa7e1e, #962fbf);
+    align-self: flex-end;
+    color: white;
+}
+
+.from-other {
+    background-color: #262626;
+    align-self: flex-start;
+    color: #fff;
+}
+
+/* Media preview */
+.message img,
+.message video {
+    border-radius: 10px;
+    margin-top: 5px;
+    max-width: 100%;
+    height: auto;
+}
+
+.msg-time {
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 4px;
+    display: block;
+    text-align: right;
+}
+
+/* Chat form */
+.chat-form {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    background-color: #121212;
+    border-top: 1px solid #262626;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.chat-form input[type="text"] {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: none;
+    background-color: #262626;
+    color: #fff;
+    outline: none;
+    font-size: 14px;
+}
+
+.chat-form input[type="file"] {
+    display: none;
+}
+
+.file-label {
+    background-color: #262626;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-form input[type="submit"] {
+    background: linear-gradient(45deg, #d62976, #fa7e1e, #962fbf);
+    border: none;
+    border-radius: 20px;
+    padding: 0 16px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ===== RESPONSIVE MEDIA QUERIES ===== */
+
+/* Small devices (phones) */
+@media (max-width: 600px) {
+    #chat-box {
+        padding: 8px;
+        gap: 8px;
+    }
+    .message {
+        font-size: 13px;
+        max-width: 85%;
+    }
+    h2 {
+        font-size: 16px;
+        padding: 10px;
+    }
+    .chat-form input[type="text"] {
+        font-size: 13px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 601px) and (max-width: 1024px) {
+    #chat-box {
+        padding: 12px;
+    }
+    .message {
+        font-size: 14px;
+        max-width: 70%;
+    }
+}
+
+/* Laptops / Desktops */
+@media (min-width: 1025px) {
+    #chat-box {
+        width: 80%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px 40px;
+    }
+    .message {
+        max-width: 55%;
+        font-size: 15px;
+    }
+    .chat-form {
+        width: 80%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 12px 20px;
+    }
+}
+
+</style>
+
+<h2>{{ request.user.username }} Chat with {{ other.username }}</h2>
+
+<div id="chat-box">
+    {% for i in chats %}
+    <div class="message {% if i.ruser == request.user %}from-user{% else %}from-other{% endif %}">
+        {% if i.msg %}
+            <p>{{ i.msg }}</p>
+        {% endif %}
+        {% if i.image %}
+            <img src="{{ i.image.url }}" alt="Image">
+        {% endif %}
+        {% if i.video %}
+            <video src="{{ i.video.url }}" controls></video>
+        {% endif %}
+        <span class="msg-time">{{ i.datetime|date:"H:i" }}</span>
+        <a href="{% url 'msg_delete' i.id %}" style="font-size:10px;color:#bbb;text-decoration:none;">delete</a>
+    </div>
+    {% endfor %}
+</div>
+
+<form action="" method="POST" enctype="multipart/form-data" class="chat-form">
+    {% csrf_token %}
+    <input type="text" name="msg" placeholder="Type a message...">
+
+    <label for="image" class="file-label">📷</label>
+    <input type="file" name="image" id="image">
+
+    <label for="video" class="file-label">🎥</label>
+    <input type="file" name="video" id="video">
+
+    <input type="submit" value="Send">
+</form>
+
+<script>
+    window.onload = function () {
+        const chatBox = document.getElementById("chat-box");
+        if (chatBox) {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    };
+</script>
+{% endblock content %}

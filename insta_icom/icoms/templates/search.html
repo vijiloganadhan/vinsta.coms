@@ -1,0 +1,147 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        background-color: #000;
+        color: #fff;
+        font-family: sans-serif;
+        overflow-x: hidden;
+    }
+
+    /* Back button */
+    .back-home {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        padding: 8px 15px;
+        background-color: rgba(0, 123, 255, 0.8);
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        z-index: 999;
+        font-weight: bold;
+    }
+
+    .back-home:hover {
+        background-color: rgba(0, 86, 179, 0.9);
+    }
+
+    /* Search box styling */
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 80px 20px 20px;
+    }
+
+    form input[type="text"] {
+        width: 250px;
+        padding: 8px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+    }
+
+    form input[type="submit"] {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        background-color: #0095f6;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #007acc;
+    }
+
+    /* Profile list container */
+    .profiles {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    /* Profile card */
+    .profile-card {
+        display: flex;
+        align-items: center;
+        background-color: #111;
+        border-radius: 10px;
+        padding: 10px;
+        width: 100%;
+        max-width: 400px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .profile-card:hover {
+        transform: scale(1.02);
+        background-color: #1a1a1a;
+    }
+
+    .profile-card img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 2px solid #333;
+    }
+
+    .profile-card h1 {
+        font-size: 16px;
+        margin: 0;
+        font-weight: normal;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+        .profile-card {
+            max-width: 90%;
+        }
+        form input[type="text"] {
+            width: 180px;
+        }
+    }
+    h1{
+        color:white;
+
+    }
+    a{
+        text-decoration: none;
+         font-size: 30px;
+
+    }
+</style>
+
+<a href="{% url 'home' %}" class="back-home">Back</a>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="q" placeholder="Share profiles here...">
+    <input type="submit" value="Search">
+</form>
+
+<div class="profiles">
+    {% if profile %}
+        {% for i in profile %}
+            <a href="{% url 'profileview' i.id %}" class="profile-card">
+                {% if i.image %}
+                    <img src="{{ i.image.url }}" alt="image not found">
+                {% endif %}
+                <h1>{{ i.user.username }}</h1>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>No profiles found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

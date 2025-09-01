@@ -1,0 +1,107 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .upload-form {
+    background:wheat;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .upload-form label {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    color:black;
+  }
+
+  .upload-form input[type="text"],
+  .upload-form input[type="file"] {
+    padding: 0.6rem;
+    border-radius: 10px;
+    border: none;
+    background: #2c2c2c;
+    color: black;
+    width: 100%;
+  }
+
+  .upload-form input[type="file"] {
+    cursor: pointer;
+    color: white;
+  }
+
+  .upload-form input[type="submit"] {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(to right,  #f43f03, #f2ea08);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .upload-form input[type="submit"]:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 500px) {
+    .upload-form {
+      padding: 1.2rem;
+    }
+  }
+ 
+  
+
+  .upload-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+    font-family: cursive;
+  }
+
+  /* Optional spacing around the form container */
+  .upload-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
+
+<div class="upload-container">
+  <h1 class="upload-heading">Upload Reels</h1>
+
+  <form action="" method="POST" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+    <label for="caption">Caption</label>
+    <input type="text" name="captions" id="caption" required>
+
+    <label for="video">Video</label>
+    <input type="file" name="video" id="video" >
+    <label for="">image</label>
+    <input type="file" name="image">
+
+    <input type="submit" value="Create">
+  </form>
+</div>
+
+{% endblock content %}

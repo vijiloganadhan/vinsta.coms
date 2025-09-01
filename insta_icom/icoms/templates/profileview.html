@@ -1,0 +1,107 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: #000;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-container {
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        background-color: #121212;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(255,255,255,0.05);
+    }
+
+    .profile-container h1 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .profile-container img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #262626;
+        margin-bottom: 15px;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 15px 0;
+    }
+
+    .stats p {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    /* Follow Button */
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .btn-follow {
+        background: linear-gradient(45deg, #d62976, #fa7e1e, #962fbf);
+        color: white;
+    }
+
+    .btn-unfollow {
+        background-color: red;
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .profile-container img {
+            width: 120px;
+            height: 120px;
+        }
+        .stats {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+
+{% if profile %}
+<div class="profile-container">
+    <h1>{{ profile.name }}</h1>
+
+    {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="{{ profile.name }}'s image not found">
+    {% endif %}
+
+    <div class="stats">
+        <p><strong>Followers:</strong> {{ profile.followers_count }}</p>
+        <p><strong>Following:</strong> {{ profile.following_count }}</p>
+    </div>
+
+    {% if is_following %}
+        <a href="{% url 'unfollow' profile_user.id %}" class="btn btn-unfollow">Unfollow</a>
+    {% else %}
+        <a href="{% url 'follow' profile_user.id %}" class="btn btn-follow">Follow</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock content %}

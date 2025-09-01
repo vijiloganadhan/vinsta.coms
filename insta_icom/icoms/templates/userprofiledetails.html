@@ -1,0 +1,192 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+/* ===== RESET ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #000;
+    color: white;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #111;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    z-index: 999;
+    border-bottom: 1px solid #333;
+}
+
+.navbar h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.search-box input {
+    padding: 6px 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+/* ===== PAGE CONTENT ===== */
+.page-container {
+    margin-top: 70px; /* space for fixed navbar */
+    padding: 20px;
+}
+
+/* Profile Info */
+.profile-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-info img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.follow-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.follow-stats div {
+    text-align: center;
+}
+
+/* Followers/Following List */
+.follow-lists {
+    margin-top: 20px;
+}
+
+.follow-lists h3 {
+    margin-bottom: 5px;
+    color: #ff4b4b;
+}
+
+.user-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.user-list span {
+    background: #222;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Posts Grid */
+.posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.post-card {
+    background: #111;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.post-card img,
+.post-card video {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .follow-stats {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+</style>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+    <h2>My Profile</h2>
+</div>
+
+<div class="page-container">
+
+    <!-- Profile Info -->
+    {% if profile %}
+    <div class="profile-info">
+        {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="{{ profile.name }}'s profile picture">
+        {% endif %}
+        <h1>{{ profile.name }}</h1>
+        <p>{{ profile.desc }}</p>
+        <div class="follow-stats">
+            <div>
+                <h3>{{ profile.following_count }}</h3>
+                <p>Following</p>
+            </div>
+            <div>
+                <h3>{{ profile.followers_count }}</h3>
+                <p>Followers</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Followings -->
+    <div class="follow-lists">
+        <h3>Following</h3>
+        <div class="user-list">
+            {% for i in following %}
+            <span>{{ i.username }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Followers -->
+    <div class="follow-lists">
+        <h3>Followers</h3>
+        <div class="user-list">
+            {% for i in followers %}
+            <span>{{ i.username }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Posts -->
+    {% if post %}
+    <div class="posts">
+        {% for i in post %}
+        <div class="post-card">
+            <h4>{{ i.title }}</h4>
+            <p>{{ i.desc }}</p>
+            {% if i.image %}
+            <img src="{{ i.image.url }}" alt="Post image">
+            {% endif %}
+            {% if i.video %}
+            <video src="{{ i.video.url }}" controls></video>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+{% endblock content %}

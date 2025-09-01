@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<style>
+    .reels-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .reel-card {
+        background: #111;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 300px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .reel-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+    }
+
+    .reel-card h2 {
+        font-size: 1.2rem;
+        margin: 10px;
+        color: #fff;
+    }
+
+    .reel-card img,
+    .reel-card video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: #ff4444;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background 0.2s ease;
+    }
+
+    .back-link:hover {
+        background: #ff2222;
+    }
+
+    body {
+        background-color: #000;
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+</style>
+
+<div class="reels-wrapper">
+    {% for reel in post_search %}
+        <div class="reel-card">
+            <h2>{{ reel.title }}</h2>
+            {% if reel.image %}
+                <img src="{{ reel.image.url }}" alt="{{ reel.title }} image not found">
+            {% endif %}
+            {% if reel.video %}
+                <video src="{{ reel.video.url }}" controls></video>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<div style="text-align: center;">
+    <a class="back-link" href="{% url 'home' %}">Back to Home</a>
+</div>
+
+{% endblock %}

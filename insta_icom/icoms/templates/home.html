@@ -1,0 +1,309 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+  body {
+    background-color: #0a0a0a;
+    color: #f2f2f2;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    
+  }
+
+  .header-bar h1 {
+    font-size: 2rem;
+    color: #00ffff;
+    margin: 0;
+  }
+
+  .profile-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .profile-link h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #00ffff;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff00cc, #00ffff);
+    padding: 3px;
+    object-fit: cover;
+    box-shadow: 0 0 15px #00ffff66;
+    transition: transform 0.3s ease;
+    position: relative;
+    left: 300px;
+  }
+
+  .profile-img:hover {
+    transform: scale(1.05);
+  }
+
+  form {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  input[type="text"] {
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 2px solid #444;
+    background: #111;
+    color: white;
+    font-size: 16px;
+    min-width: 220px;
+    flex: 1;
+    transition: 0.3s ease;
+  }
+
+  input[type="text"]:focus {
+    border-color: #00ffff;
+    outline: none;
+    box-shadow: 0 0 10px #00ffff50;
+  }
+
+  input[type="submit"] {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(135deg, #ff00cc, #3333ff);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  input[type="submit"]:hover {
+    background: linear-gradient(135deg, #3333ff, #ff00cc);
+    transform: scale(1.05);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    background: linear-gradient(to right, #fed97585, #d6309195, #962fbfb5);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: 0.3s ease;
+    color: #00ffd9;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    background-color: #333;
+    color: #ff66cc;
+  }
+
+  .post {
+    background-color: #141414;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 15px #ffffff11;
+    transition: 0.3s ease;
+  }
+
+  .post:hover {
+    box-shadow: 0 0 20px #00ffff33;
+ 
+  }
+
+  .post h1 {
+    color: #ff66cc;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .post p {
+    color: #dcdcdc;
+    margin: 8px 0;
+  }
+
+  .media-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+
+.post video {
+  width: 100%;
+  max-width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #00ffff55;
+}
+.post img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #00ffff55;
+
+}
+
+
+  @media (max-width: 600px) {
+    .header-bar {
+      justify-content: center;
+    }
+
+    .post img, .post video {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<div class="container">
+
+<div class="header-bar">
+  <h1><a href="{% url 'home' %}" style="text-decoration:none; color:rgb(0, 128, 111);">vinsta</a></h1>
+  {% if profile %}
+    {% if profile.image %}
+      <a href="{% url 'userprofiledetails' profile.id %}">
+        <img src="{{profile.image.url}}" alt="" class="profile-img">
+      </a>
+      <span>{{profile.name}}</span>
+    {% endif %}
+  {% endif %}
+</div>
+
+
+  <form action="{% url 'search_post' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Search for Posts here...">
+    <input type="submit" value="🔍">
+  </form>
+
+  <div class="nav-links">
+    <a href="{% url 'create' %}">Create</a>
+    <a href="{% url 'reels' %}">reels</a>
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">Signup</a>
+    {% endif %}
+    {% if not profile.name %}
+     <a href="{% url 'createprofile' %}">create profile</a>
+    {% endif %}
+    <a href="{% url 'search_profile' %}"> profile search </a>
+    {% if  other.id %}
+  <a href="{% url 'message' other.id %}">message</a>
+{% endif %}
+</div>
+<div style="display: flex; align-items: center; justify-content: space-evenly; gap:10px; flex-wrap: wrap;">
+    {% if reels %}
+        {% for r in reels %}
+            <div>
+                {% if r.image %}
+                    <img src="{{r.image.url}}" alt="image not found" width="200px" height="300px">
+                {% endif %}
+                {% if r.video %}
+                    <video src="{{r.video.url}}" controls width="200px" height="300px"></video>
+                {% endif %}
+                <p><big>{{r.captions}}</big></p>
+                <p><big>{{r.date}}</big></p>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+ 
+  <div>
+    {% if post %}
+    {% for i in post %}
+      <div class="post">
+        <h1>{{i.user.username}}</h1>
+        <a href="{% url 'postuser' i.id %}"><div class="media-wrapper">
+          {% if i.image %}
+            <img src="{{ i.image.url }}" alt="Image by {{ i.user.username }}">
+          {% endif %}
+
+          {% if i.video %}
+            <video src="{{ i.video.url }}" controls muted></video>
+          {% endif %}
+        </div></a>
+         <h1>{{ i.title }}</h1>
+        <p><big>{{ i.desc }}</big></p>
+        <p>Type: {{ i.type }}</p>
+        <h1><a href="{% url 'comments' i.id  %}">comment</a></h1>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div>
+  <h1>{{request.user.username}} 's followers message </h1>
+  {% if followers %}
+  {% for i in followers %}
+  <h1><a href="{% url 'message' i.id %}">{{i.username}}</a></h1>
+  {% endfor %}
+  {% endif %}
+</div>
+ 
+<style>
+.upload-button {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  color: #000;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-decoration: none;
+  z-index: 999;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease-in-out;
+}
+.upload-button:hover {
+  background-color: #fafafa;
+  transform: translateX(-50%) scale(1.05);
+}
+</style>
+
+<a href="{% url 'uploadreels' %}" class="upload-button">+</a>
+<center><p> <big> <a href="{% url 'home' %}" style="color:white; text-decoration: none;"> Back to top </a></big></p></center>
+
+{% endblock content %} give css same like instagram laptop not tab or mobile
