@@ -184,7 +184,7 @@ def post_view(request,ids):
 def post_delete(request,ids):
     post_user=Post.objects.filter(id=ids,user=request.user)
     post_user.delete()
-    return redirect('userprofiledetails',ids=post_user.id)
+    return redirect('home')
 
 def reels_upload(request):
     if request.method=="POST":
