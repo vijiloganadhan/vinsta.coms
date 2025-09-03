@@ -133,8 +133,10 @@ import os
 MEDIA_URL="media/"
 MEDIA_ROOT=os.path.join(BASE_DIR , 'media/')
 
-cloudinary.config {
-    cloud_name="dhy2vqhho",
-    api_key="783615335585822",
-    api_secret="TL3UA"
-}
+import cloudinary
+
+cloudinary.config( 
+  cloud_name="dhy2vqhho", 
+  api_key="your_api_key", 
+  api_secret="your_api_secret" 
+)
