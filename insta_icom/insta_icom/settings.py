@@ -27,7 +27,9 @@ DEBUG = os.environ.get("DEBUG")
 from decouple import config
 ALLOWED_HOSTS=config("ALLOWED_HOSTS",default="").split(",")
 
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Application definition
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'icoms',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +132,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 MEDIA_URL="media/"
 MEDIA_ROOT=os.path.join(BASE_DIR , 'media/')
+
+cloudinary.config {
+    cloud_name="dhy2vqhho",
+    api_key="783615335585822",
+    api_secret="TL3UA"
+}
