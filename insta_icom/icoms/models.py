@@ -44,7 +44,7 @@ class Comments(models.Model):
 class Follow_user(models.Model):
     following=models.ForeignKey(User,on_delete=models.CASCADE,related_name="following_user")
     followers=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followers_user")
-    datatime=models.DateTimeField(auto_now=True)
+    datatime=models.DateTimeField(auto_now=True,null=True,blank=True)
     def __str__(self):
         return f"{self.followers.username} followed by {self.following.username}"
 class Message(models.Model):
