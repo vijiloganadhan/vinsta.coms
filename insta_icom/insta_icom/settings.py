@@ -137,6 +137,6 @@ MEDIA_ROOT=os.path.join(BASE_DIR , 'media/')
 
 cloudinary.config( 
   cloud_name="dhy2vqhho", 
-  api_key="your_api_key", 
-  api_secret="your_api_secret" 
+  api_key="783615335585822", 
+  api_secret="UgtQ4BoE24nRF01MPK96NiJyfhg" 
 )
