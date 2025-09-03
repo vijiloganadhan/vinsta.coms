@@ -196,8 +196,9 @@
     {% if profile.image %}
       <a href="{% url 'userprofiledetails' profile.id %}">
         <img src="{{profile.image.url}}" alt="" class="profile-img">
+        <span>{{profile.name}}</span>
       </a>
-      <span>{{profile.name}}</span>
+      
     {% endif %}
   {% endif %}
 </div>
