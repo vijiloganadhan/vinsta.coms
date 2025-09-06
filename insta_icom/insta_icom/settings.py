@@ -85,8 +85,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-import dj_database_url
-DATABASES = {"default": dj_database_url.config(default=os.environ["DATABASE_URL"])}
+import os, dj_database_url
+
+DATABASES = {
+    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+}
 
 
 # Password validation
