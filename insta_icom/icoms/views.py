@@ -81,9 +81,7 @@ def target_profile(request,ids):
     profile_user=get_object_or_404(User,id=ids)
     profile=get_object_or_404(Profile,user=profile_user)
     post=Post.objects.filter(user=profile_user)
-    is_following=False
-    if request.user.is_authenticated:
-       is_following= Follow_user.objects.filter(following=profile_user,followers=request.user).exists()
+    is_following = request.user.is_authenticated and Follow_user.objects.filter(following=profile_user, followers=request.user).exists()
     context={
         'profile_user':profile_user,
         'profile':profile,
