@@ -123,6 +123,7 @@ body {
 </style>
 
 <!-- ===== NAVBAR ===== -->
+ <h1><a href="{% url 'home' %}">Back to home </a></h1>
 <div class="navbar">
     <h2>My Profile</h2>
 </div>
@@ -137,6 +138,7 @@ body {
         {% endif %}
         <h1>{{ profile.name }}</h1>
         <p>{{ profile.desc }}</p>
+        <p><big><a href="{% url 'editprofile' profile.id %}">Edit profile</a></big></p>
         <div class="follow-stats">
             <div>
                 <h3>{{ profile.following_count }}</h3>
