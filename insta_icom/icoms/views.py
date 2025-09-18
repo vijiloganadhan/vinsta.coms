@@ -137,7 +137,7 @@ def edit_user_profile(request,ids):
         profile.desc=desc
         profile.image=image
         profile.save()
-        return redirect("profileview" ,ids=profile.id)
+        return redirect("userprofiledetails" ,ids=profile.id)
     context={
         'profile':profile
     }
