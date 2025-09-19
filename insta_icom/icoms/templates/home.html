@@ -261,7 +261,7 @@
          <h1>{{ i.title }}</h1>
         <p><big>{{ i.desc }}</big></p>
         <p>Type: {{ i.type }}</p>
-        <h1><a href="{% url 'comments' i.id  %}">comment</a></h1>
+        <h1><a href="{% url 'comments' i.id  %}" style="color:white; text-decoration: none;">comment</a></h1>
       </div>
     {% endfor %}
   {% endif %}
@@ -270,7 +270,7 @@
   <h1>{{request.user.username}} 's followers message </h1>
   {% if followers %}
   {% for i in followers %}
-  <h1><a href="{% url 'message' i.id %}">{{i.username}}</a></h1>
+  <h1><a href="{% url 'message' i.id %}" style="color:white; text-decoration: none;">{{i.username}}</a></h1>
   {% endfor %}
   {% endif %}
 </div>
@@ -306,4 +306,4 @@
 <a href="{% url 'uploadreels' %}" class="upload-button">+</a>
 <center><p> <big> <a href="{% url 'home' %}" style="color:white; text-decoration: none;"> Back to top </a></big></p></center>
 
-{% endblock content %} give css same like instagram laptop not tab or mobile
+{% endblock content %}
