@@ -160,7 +160,7 @@ def post_create(request):
         if video:
             video_url= upload(video , resource_type="video")["secure_url"]
 
-        Post.objects.create(title=title,desc=desc,type=choice,image=image,video=video,user=request.user)
+        Post.objects.create(title=title,desc=desc,type=choice,image=image_url,video=video_url,user=request.user)
         return redirect('home')
     return render(request,'create_post.html')
 
