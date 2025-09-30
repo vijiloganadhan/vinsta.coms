@@ -4,6 +4,7 @@ from .models import Post,Profile,Reels,Comments,Follow_user,Message
 from django.contrib.auth import authenticate,login,logout
 import random
 from django.db.models import Q ,F
+from cloudinary.uploader import upload
 # Create your views here
 
 def signup_views(request):
@@ -152,6 +153,13 @@ def post_create(request):
         choice=request.POST.get('choice')
         image=request.FILES.get('images')
         video=request.FILES.get('videos')
+        image_url=None
+        video_url=None
+        if image:
+            image_url = upload(image, resource_type="image")['secure_url']
+        if video:
+            video_url= upload(video , resource_type="video")["secure_url"]
+
         Post.objects.create(title=title,desc=desc,type=choice,image=image,video=video,user=request.user)
         return redirect('home')
     return render(request,'create_post.html')
