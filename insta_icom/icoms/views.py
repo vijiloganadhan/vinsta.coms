@@ -197,6 +197,12 @@ def reels_upload(request):
         captions=request.POST.get('captions')
         image=request.FILES.get('image')
         video=request.FILES.get('video')
+        video_url=None
+        image_url=None
+        if image:
+            image_url=upload(image,resourse_type="image")['secure_url']
+        if video:
+            video_url=upload(video,resourse_type="video")['secure_url']
         Reels.objects.create(captions=captions,image=image,user=request.user,video=video)
         return redirect('reels')
     return render(request,'upload_reels.html')
