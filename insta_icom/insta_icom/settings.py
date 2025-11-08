@@ -85,11 +85,7 @@ WSGI_APPLICATION = 'insta_icom.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-from decouple import config
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
 
 DATABASES={
     'default':{
