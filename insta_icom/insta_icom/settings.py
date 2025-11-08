@@ -27,9 +27,9 @@ DEBUG =config("DEBUG",default="False",cast=bool)
 
 ALLOWED_HOSTS=config("ALLOWED_HOSTS",default="").split(",")
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
 
 # Application definition
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'icoms',
-    'cloudinary',
+    # 'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -79,17 +79,29 @@ WSGI_APPLICATION = 'insta_icom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+from decouple import config
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DATABASES={
+    'default':{
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME':'post1',
+    'USER':'postgres',
+    'PASSWORD':'12345',
+    'HOST':'localhost',
+    'PORT':'5432',
     }
+
 }
-
-
-
-import dj_database_url
-DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=True)}
 
 
 # Password validation
@@ -138,11 +150,11 @@ MEDIA_URL="media/"
 MEDIA_ROOT=os.path.join(BASE_DIR , 'media/')
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dhy2vqhho',
-    'API_KEY': '783615335585822',
-    'API_SECRET': 'UgtQ4BoE24nRF01MPK96NiJyfhg'
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'dhy2vqhho',
+#     'API_KEY': '783615335585822',
+#     'API_SECRET': 'UgtQ4BoE24nRF01MPK96NiJyfhg'
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

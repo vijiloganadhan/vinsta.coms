@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from cloudinary.models import CloudinaryField
+# from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -11,26 +11,26 @@ class Post(models.Model):
         ('video','video'),
     ]
     title=models.CharField(max_length=100)
-    desc=models.TextField()
-    type=models.CharField(max_length=100,choices=choice)
-    image=CloudinaryField('postimage/')
-    video=CloudinaryField('postvideo/',null=True,blank=True)
+    desc=models.TextField(null=True,blank=True)
+    type=models.CharField(max_length=100,choices=choice,null=True,blank=True)
+    image=models.ImageField(upload_to='postimage/',null=True,blank=True)
+    video=models.ImageField(upload_to='postvideo/',null=True,blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
 class Profile(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     name=models.CharField(max_length=100,null=True,blank=True)
     desc=models.TextField(null=True,blank=True)
-    image=models.ImageField("profile_image/",null=True,blank=True)
+    image=models.ImageField(upload_to="profile_image/",null=True,blank=True)
     following_count=models.PositiveIntegerField(default=0,null=True,blank=True)
     followers_count=models.PositiveIntegerField(default=0,null=True,blank=True)
     def __str__(self):
         return str(self.user)  if self.user else "No User"
 class Reels(models.Model):
-    image=models.ImageField('reels_image',null=True,blank=True)
+    image=models.ImageField(upload_to='reels_image',null=True,blank=True)
     captions=models.CharField(max_length=100,null=True,blank=True)
     date=models.DateTimeField(auto_now_add=True,null=True,blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    video=CloudinaryField("reels_video",null=True,blank=True)
+    video=models.ImageField(upload_to="reels_video",null=True,blank=True)
     def __str__(self):
         return f'{self.captions}-{self.date}'
 
@@ -43,16 +43,16 @@ class Comments(models.Model):
     def __str__(self):
         return f"{self.comments_user.username}-{self.message}"
 class Follow_user(models.Model):
-    following=models.ForeignKey(User,on_delete=models.CASCADE,related_name="following_user")
-    followers=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followers_user")
+    following=models.ForeignKey(User,on_delete=models.CASCADE,related_name="following_user",null=True,blank=True)
+    followers=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followers_user",null=True,blank=True)
     datatime=models.DateTimeField(auto_now=True,null=True,blank=True)
     def __str__(self):
         return f"{self.followers.username} followed by {self.following.username}"
 class Message(models.Model):
-    ruser=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user")
-    other=models.ForeignKey(User,on_delete=models.CASCADE,related_name="otheruser")
-    image=CloudinaryField("mimage")
-    video=CloudinaryField("mvideo",null=True,blank=True)
+    ruser=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user",null=True,blank=True)
+    other=models.ForeignKey(User,on_delete=models.CASCADE,related_name="otheruser",null=True,blank=True)
+    image=models.ImageField(upload_to="mimage",null=True,blank=True)
+    video=models.ImageField(upload_to="mvideo",null=True,blank=True)
     datetime=models.DateTimeField(auto_now_add=True,null=True,blank=True)
     msg=models.TextField(null=True,blank=True)
     def __str__(self):
