@@ -42,7 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'icoms',
     # 'cloudinary',
+    'django_mongoengine',
+    'django_mongoengine.mongo_admin',
+
 ]
+from mongoengine import connect
+connect(
+    db="vinsta",
+    host=config("MONGODB_URI")
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,17 +95,19 @@ WSGI_APPLICATION = 'insta_icom.wsgi.application'
 # }
 
 
-DATABASES={
-    'default':{
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME':'post1',
-    'USER':'postgres',
-    'PASSWORD':'12345',
-    'HOST':'localhost',
-    'PORT':'5432',
-    }
+# DATABASES={
+#     'default':{
+#     'ENGINE': 'django.db.backends.postgresql',
+#     'NAME':'post1',
+#     'USER':'postgres',
+#     'PASSWORD':'12345',
+#     'HOST':'localhost',
+#     'PORT':'5432',
+#     }
 
-}
+# }
+
+
 
 
 # Password validation
