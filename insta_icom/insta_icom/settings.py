@@ -14,22 +14,20 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-import os
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-from decouple import config
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =config("SECRET_KEY","your secert key")
-
+import os
+from decouple import config
+SECRET_KEY = config("SECRET_KEY","your secert key")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =config("DEBUG",default="False",cast=bool)
+DEBUG = config("DEBUG",cast=bool,default=False)
 
-ALLOWED_HOSTS=config("ALLOWED_HOSTS",default="").split(",")
+ALLOWED_HOSTS = config("ALLOWED_HOSTS",default="").split(",")
 
-# import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
 
 # Application definition
 
@@ -41,16 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'icoms',
-    # 'cloudinary',
-    'django_mongoengine',
-    'django_mongoengine.mongo_admin',
-
 ]
-from mongoengine import connect
-connect(
-    db="vinsta",
-    host=config("MONGODB_URI")
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -93,23 +82,19 @@ WSGI_APPLICATION = 'insta_icom.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-
-# DATABASES={
-#     'default':{
-#     'ENGINE': 'django.db.backends.postgresql',
-#     'NAME':'post1',
-#     'USER':'postgres',
-#     'PASSWORD':'12345',
-#     'HOST':'localhost',
-#     'PORT':'5432',
-#     }
-
-# }
-
-
-
-
+import certifi
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'vinsta',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': config("MONGODB_URI"),
+            'tls': True,
+            'tlsCAFile': certifi.where(),
+        }
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -154,13 +139,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 MEDIA_URL="media/"
 MEDIA_ROOT=os.path.join(BASE_DIR , 'media/')
-
-
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': 'dhy2vqhho',
-#     'API_KEY': '783615335585822',
-#     'API_SECRET': 'UgtQ4BoE24nRF01MPK96NiJyfhg'
-# }
-
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-

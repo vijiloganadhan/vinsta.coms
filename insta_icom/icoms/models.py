@@ -1,90 +1,62 @@
-from mongoengine import Document, StringField, ReferenceField, DateTimeField, IntField, FileField
-from django.contrib.auth.models import User  # still can reference Django user
-from datetime import datetime
-
-  # replace with your actual database name
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
-# Post Model
-class Post(Document):
-    CHOICES = [
-        ('image', 'image'),
-        ('video', 'video'),
+# Create your models here.
+class Post(models.Model):
+    choice=[
+        ('image','image'),
+        ('video','video'),
     ]
-    title = StringField(max_length=100, required=True)
-    desc = StringField()
-    type = StringField(choices=CHOICES)
-    image = FileField()
-    video = FileField()
-    user = ReferenceField(User)
-    meta = {'collection': 'post'}
-
-
-# Profile Model
-class Profile(Document):
-    user = ReferenceField(User)
-    name = StringField(max_length=100)
-    desc = StringField()
-    image = FileField()
-    following_count = IntField(default=0)
-    followers_count = IntField(default=0)
-
+    title=models.CharField(max_length=100)
+    desc=models.TextField()
+    type=models.CharField(max_length=100,choices=choice)
+    image=models.FileField(upload_to='postimage/')
+    video=models.FileField(upload_to='postvideo/',null=True,blank=True)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+class Profile(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    name=models.CharField(max_length=100,null=True,blank=True)
+    desc=models.TextField(null=True,blank=True)
+    image=models.ImageField(upload_to="profile_image/",null=True,blank=True)
+    following_count=models.PositiveIntegerField(default=0,null=True,blank=True)
+    followers_count=models.PositiveIntegerField(default=0,null=True,blank=True)
     def __str__(self):
-        return str(self.user) if self.user else "No User"
-
-    meta = {'collection': 'profile'}
-
-
-# Reels Model
-class Reels(Document):
-    image = FileField()
-    captions = StringField(max_length=100)
-    date = DateTimeField(default=datetime.utcnow)
-    user = ReferenceField(User)
-    video = FileField()
-
+        return str(self.user)  if self.user else "No User"
+class Reels(models.Model):
+    image=models.ImageField(upload_to='reels_image',null=True,blank=True)
+    captions=models.CharField(max_length=100,null=True,blank=True)
+    date=models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    video=models.FileField(upload_to="reels_video",null=True,blank=True)
     def __str__(self):
-        return f'{self.captions} - {self.date}'
+        return f'{self.captions}-{self.date}'
 
-    meta = {'collection': 'reels'}
-
-
-# Comments Model
-class Comments(Document):
-    comments_user = ReferenceField(User, required=False)
-    reply_comments = ReferenceField(User, required=False)
-    message = StringField()
-    post = ReferenceField(Post)
-    datetime = DateTimeField(default=datetime.utcnow)
-
+class Comments(models.Model):
+    comments_user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True ,related_name="other_user")
+    reply_comments=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name="own_user")
+    message=models.TextField(null=True,blank=True)
+    post=models.ForeignKey(Post,on_delete=models.CASCADE,null=True,blank=True)
+    datetime=models.DateTimeField(auto_now_add=True,null=True,blank=True)
     def __str__(self):
-        return f"{self.comments_user.username}-{self.message}" if self.comments_user else self.message
-
-    meta = {'collection': 'comments'}
-
-
-# Follow_user Model
-class Follow_user(Document):
-    following = ReferenceField(User, required=False)
-    followers = ReferenceField(User, required=False)
-    datetime = DateTimeField(default=datetime.utcnow)
-
+        return f"{self.comments_user.username}-{self.message}"
+class Follow_user(models.Model):
+    following=models.ForeignKey(User,on_delete=models.CASCADE,related_name="following_user")
+    followers=models.ForeignKey(User,on_delete=models.CASCADE,related_name="followers_user")
+    datatime=models.DateTimeField(auto_now=True)
     def __str__(self):
         return f"{self.followers.username} followed by {self.following.username}"
-
-    meta = {'collection': 'follow_user'}
-
-
-# Message Model
-class Message(Document):
-    ruser = ReferenceField(User, required=False)
-    other = ReferenceField(User, required=False)
-    image = FileField()
-    video = FileField()
-    datetime = DateTimeField(default=datetime.utcnow)
-    msg = StringField()
-
+class Message(models.Model):
+    ruser=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user")
+    other=models.ForeignKey(User,on_delete=models.CASCADE,related_name="otheruser")
+    image=models.ImageField(upload_to="mimage")
+    video=models.FileField(upload_to="mvideo",null=True,blank=True)
+    datetime=models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    msg=models.TextField(null=True,blank=True)
     def __str__(self):
-        return f"req_user - {self.ruser.username} - other - {self.other.username}"
+        return f"req_user - {self.ruser.username} - other- {self.other.username}"
+    
 
-    meta = {'collection': 'message'}
+
+
