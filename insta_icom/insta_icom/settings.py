@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'insta_icom.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-import certifi
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
