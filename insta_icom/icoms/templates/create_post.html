@@ -1,6 +1,5 @@
 {% extends 'main.html'%}
 {% block content %}
-<h1><a href="{% url 'home'%}" style="color:white; text-decoration: none; font-family: Georgia, 'Times New Roman', Times, serif;">Back to home</a></h1>
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="">title</label>
@@ -12,9 +11,8 @@
         <option value="image">image</option>
         <option value="video">video</option>
     </select>
-    image
-    <input type="file" name="images" id="" accept="image/*">
-    <input type="file" name="videos" accept="video/mp4,video/*">video
+    <input type="file" name="images" id="">
+    <input type="file" name="videos">
     <input type="submit" value="create">
 </form>
 <style>

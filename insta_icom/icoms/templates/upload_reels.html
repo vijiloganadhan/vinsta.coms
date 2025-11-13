@@ -87,8 +87,6 @@
   }
 </style>
 
-<h1><a href="{% url 'home' %}" style="color:white; text-decoration: none; font-family: Georgia, 'Times New Roman', Times, serif;">Back to home</a></h1>
-
 <div class="upload-container">
   <h1 class="upload-heading">Upload Reels</h1>
 
@@ -98,9 +96,9 @@
     <input type="text" name="captions" id="caption" required>
 
     <label for="video">Video</label>
-    <input type="file" name="video" id="video" accept="video/mp4,video*/" >
+    <input type="file" name="video" id="video" >
     <label for="">image</label>
-    <input type="file" name="image" accept="image*/"> 
+    <input type="file" name="image">
 
     <input type="submit" value="Create">
   </form>

@@ -1,5 +1,0 @@
-SECRET_KEY=django-insecure-q2r!6eysc(xq=htb9@jchs9!d(#3)vs)=_6r+k7t#&k92f+ox^
-DEBUG = True
-ALLOWED_HOSTS=127.0.0.1,localhost,vinsta-coms-u7n1.onrender.com
-MONGODB_URI=mongodb+srv://mlvijayalakshmiloganathan_db_user:1nCEzWzC7yZLodnF@cluster0.vfufdf8.mongodb.net/?appName=Cluster0
-

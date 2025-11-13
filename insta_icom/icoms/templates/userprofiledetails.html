@@ -123,10 +123,8 @@ body {
 </style>
 
 <!-- ===== NAVBAR ===== -->
-
 <div class="navbar">
     <h2>My Profile</h2>
-    <span><big><a href="{% url 'home' %}" style="text-decoration: none;color:white;font-size: 20px;">Back to home</a></big></span>
 </div>
 
 <div class="page-container">
@@ -139,11 +137,10 @@ body {
         {% endif %}
         <h1>{{ profile.name }}</h1>
         <p>{{ profile.desc }}</p>
-        <p><big><a href="{% url 'editprofile' profile.id %}" style="text-decoration: none; font-size: 20px;color: white;">Edit profile</a></big></p>
         <div class="follow-stats">
             <div>
                 <h3>{{ profile.following_count }}</h3>
-                <p><a href="{% url 'profileview' profile.id %}">Following</a></p>
+                <p>Following</p>
             </div>
             <div>
                 <h3>{{ profile.followers_count }}</h3>

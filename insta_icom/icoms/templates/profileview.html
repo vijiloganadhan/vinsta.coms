@@ -83,9 +83,6 @@
         }
     }
 </style>
-<div>
-    <h1><a href="{% url 'home' %}" style="color:white; text-decoration: none; font-family: Georgia, 'Times New Roman', Times, serif;">Back to home</a></h1>
-</div>
 
 {% if profile %}
 <div class="profile-container">
@@ -94,6 +91,7 @@
     {% if profile.image %}
         <img src="{{ profile.image.url }}" alt="{{ profile.name }}'s image not found">
     {% endif %}
+
     <div class="stats">
         <p><strong>Followers:</strong> {{ profile.followers_count }}</p>
         <p><strong>Following:</strong> {{ profile.following_count }}</p>
