@@ -6,7 +6,7 @@ dnspython>=2.6.1
 pymongo>=4.3.3
 python-decouple==3.8
 pytz==2025.2
-sqlparse==0.4.4
+sqlparse==0.2.4
 typing_extensions==4.8.0
 gunicorn==23.0.0
 setuptools>=70.0.0
