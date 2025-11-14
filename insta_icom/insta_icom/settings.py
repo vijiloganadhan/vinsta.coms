@@ -89,7 +89,7 @@ DATABASES = {
         'NAME': 'vinsta',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': config("MONGODB_URI"),
+            'host': config("MONGODB_URI",default='mongodb://localhost:27017/vinsta'),
             'tls': True,
             'tlsCAFile': certifi.where(),
         }
